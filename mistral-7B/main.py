@@ -116,8 +116,23 @@ def interactive(model_path: str, max_tokens: int = 35, temperature: float = 0.7)
         )
         print(res[0])
         print("=====================")
+        
 
-def demo(model_path: str, max_tokens: int = 35, temperature: float = 0):
+def single_inference(model_path: str, prompt: str, max_tokens: int = 35, temperature: float = 0.7):
+    tokenizer = Tokenizer(str(Path(model_path) / "tokenizer.model"))
+    transformer = Transformer.from_folder(Path(model_path), max_batch_size=3)
+    
+    res, _logprobs = generate(
+        [prompt],
+        transformer,
+        tokenizer,
+        max_tokens=max_tokens,
+        temperature=temperature,
+    )
+    print(res[0])
+    
+
+def demo(model_path: str, max_tokens: int = 35, temperature: float = 0.7):
     tokenizer = Tokenizer(str(Path(model_path) / "tokenizer.model"))
     transformer = Transformer.from_folder(Path(model_path), max_batch_size=3)
 
@@ -139,5 +154,6 @@ def demo(model_path: str, max_tokens: int = 35, temperature: float = 0):
 if __name__ == "__main__":
     fire.Fire({
         "interactive": interactive,
+        "single-inference": single_inference,
         "demo": demo,
     })
