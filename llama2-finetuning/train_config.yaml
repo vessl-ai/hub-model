@@ -1,0 +1,34 @@
+model_name: /model_/llama_2_7b_hf
+quantization: true
+
+# dataset
+dataset_path: /dataset/code_instructions_18k_alpaca
+
+# training
+training_config:
+  batch_size: 4
+  grad_acc_steps: 1
+  learning_rate: 3e-4
+  warm_up_steps: 10000
+  num_train_epochs: 3
+  evaluation_strategy: steps
+  save_strategy: steps
+  logging_steps: 100
+  eval_steps: 1000
+  save_steps: 1000
+  save_limit: 5
+  output_dir: /trained_model/
+  intermediate_dir: /artifacts/
+
+# lora config
+peft:
+  enable: true
+  config:
+    peft_type: LORA
+    task_type: CAUSAL_LM
+    inference_mode: false
+    r: 8
+    target_modules: [q_proj, v_proj]
+    lora_alpha: 16
+    lora_dropout: 0.05
+    bias: none
