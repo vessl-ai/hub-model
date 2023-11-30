@@ -16,7 +16,7 @@ with col2:
     input_query = st.text_input("Input Query", "Tom see flowers")
     temperature = st.slider("Temperature", 0.00, 1.00, 0.70, 0.01)
 
-    cmd = f"python main.py single-inference /root/ckpt/mistral-7B-v0.1/ --max_tokens 256 --temperature {temperature} --prompt".split(
+    cmd = f"python main.py single-inference /model/mistral-7B-v0.1/ --max_tokens 256 --temperature {temperature} --prompt".split(
         " "
     )
     cmd.append(input_query)
