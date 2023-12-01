@@ -247,7 +247,8 @@ class Transformer(nn.Module):
         with open(folder / 'params.json', 'r') as f:
             model_args = ModelArgs(**json.loads(f.read()))
         model_args.max_batch_size = max_batch_size
+        torch.set_default_dtype(torch.float16)
         model = Transformer(model_args).to(device=device, dtype=dtype)
-        loaded = torch.load(folder / 'consolidated.00.pth')
-        model.load_state_dict(loaded)
+        torch.set_default_dtype(torch.float32)
+        model.load_state_dict(torch.load(folder / 'consolidated.00.pth'))
         return model
