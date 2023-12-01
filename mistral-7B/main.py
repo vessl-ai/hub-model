@@ -120,7 +120,7 @@ def interactive(model_path: str, max_tokens: int = 35, temperature: float = 0.7)
 
 def single_inference(model_path: str, prompt: str, max_tokens: int = 35, temperature: float = 0.7):
     tokenizer = Tokenizer(str(Path(model_path) / "tokenizer.model"))
-    transformer = Transformer.from_folder(Path(model_path), max_batch_size=3)
+    transformer = Transformer.from_folder(Path(model_path), max_batch_size=1)
     
     res, _logprobs = generate(
         [prompt],
