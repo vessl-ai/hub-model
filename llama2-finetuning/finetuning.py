@@ -12,24 +12,24 @@ from transformers import (
     TrainingArguments,
 )
 
-train_config = OmegaConf.load("./train_config.yaml")
+config = OmegaConf.load("./config.yaml")
 
 model = LlamaForCausalLM.from_pretrained(
-    train_config.model_name,
-    load_in_8bit=True if train_config.quantization else None,
-    device_map="auto" if train_config.quantization else None,
+    config.model_name,
+    load_in_8bit=True if config.quantization else None,
+    device_map="auto" if config.quantization else None,
 )
 
-tokenizer = LlamaTokenizer.from_pretrained(train_config.model_name)
+tokenizer = LlamaTokenizer.from_pretrained(config.model_name)
 tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 
 
-if train_config.quantization:
+if config.quantization:
     model = prepare_model_for_int8_training(model)
 
-if train_config.peft.enable:
-    peft_config = get_peft_config(OmegaConf.to_container(train_config.peft.config))
+if config.peft.enable:
+    peft_config = get_peft_config(OmegaConf.to_container(config.peft.config))
     model = get_peft_model(model, peft_config)
 
 
@@ -57,14 +57,14 @@ def tokenize(sample, add_eos_token=True):
     return result
 
 
-ds = load_from_disk(train_config.dataset_path)
+ds = load_from_disk(config.dataset_path)
 processed_ds = ds.map(tokenize)
 
 data_collator = DataCollatorForSeq2Seq(
     tokenizer, pad_to_multiple_of=8, return_tensors="pt", padding=True
 )
 
-
+train_config = config.training
 training_arguments = TrainingArguments(
     per_device_train_batch_size=train_config.batch_size,
     gradient_accumulation_steps=train_config.grad_acc_steps,
@@ -72,14 +72,14 @@ training_arguments = TrainingArguments(
     num_train_epochs=train_config.num_train_epochs,
     # max_steps=train_config.max_steps,
     learning_rate=train_config.learning_rate,
-    fp16=True,
+    fp16=train_config.use_fp16,
     logging_steps=train_config.logging_steps,
     evaluation_strategy="steps",
     save_strategy="steps",
     eval_steps=train_config.eval_steps,
     save_steps=train_config.save_steps,
     output_dir=train_config.intermediate_dir,
-    save_total_limit=5,
+    save_total_limit=train_config.save_limit,
     load_best_model_at_end=True,
 )
 

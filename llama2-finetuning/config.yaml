@@ -1,21 +1,24 @@
+# model
 model_name: /model_/llama_2_7b_hf
 quantization: true
 
 # dataset
-dataset_path: /dataset/code_instructions_18k_alpaca
+dataset_path: /dataset/
 
 # training
-training_config:
-  batch_size: 4
+training:
+  batch_size: 8
   grad_acc_steps: 1
   learning_rate: 3e-4
-  warm_up_steps: 10000
+  use_fp16: true
+  warmup_steps: 100
+  # max_steps: 20000
   num_train_epochs: 3
   evaluation_strategy: steps
   save_strategy: steps
-  logging_steps: 100
-  eval_steps: 1000
-  save_steps: 1000
+  logging_steps: 5
+  eval_steps: 25
+  save_steps: 25
   save_limit: 5
   output_dir: /trained_model/
   intermediate_dir: /artifacts/
