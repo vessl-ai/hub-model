@@ -1,0 +1,13 @@
+datasets==2.15.0
+dill==0.3.7
+evaluate==0.4.1
+huggingface-hub==0.19.4
+jiwer==3.0.3
+multiprocess==0.70.15
+pyarrow-hotfix==0.6
+rapidfuzz==3.5.2
+responses==0.18.0
+safetensors==0.4.1
+tokenizers==0.15.0
+transformers==4.35.2
+xxhash==3.4.1
