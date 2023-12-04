@@ -1,0 +1,17 @@
+accelerate==0.24.1
+altair==5.2.0
+blinker==1.7.0
+diffusers==0.24.0
+gitdb==4.0.11
+GitPython==3.1.40
+huggingface-hub==0.19.4
+pydeck==0.8.1b0
+rich==13.7.0
+safetensors==0.4.1
+smmap==5.0.1
+streamlit==1.28.2
+tenacity==8.2.3
+tokenizers==0.15.0
+transformers==4.35.2
+tzlocal==5.2
+validators==0.22.0
