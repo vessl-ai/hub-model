@@ -8,8 +8,8 @@ from mistral.model import Transformer
 from mistral.tokenizer import Tokenizer
 from main import generate
 
-tokenizer = Tokenizer("/model/mistral-7B-v0.1/tokenizer.model")
-transformer = Transformer.from_folder(Path("/model/mistral-7B-v0.1/"), max_batch_size=1)
+tokenizer = Tokenizer("/model_/mistral-7B-v0.1/tokenizer.model")
+transformer = Transformer.from_folder(Path("/model_/mistral-7B-v0.1/"), max_batch_size=1)
 
 st.set_page_config(layout="wide")
 
