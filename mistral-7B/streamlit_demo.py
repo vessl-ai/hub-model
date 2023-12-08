@@ -16,8 +16,7 @@ def load_models():
 
     return tokenizer, transformer
 
-
-tokenizer, transformer = load_models()
+is_loaded = False
 
 st.set_page_config(layout="wide")
 
@@ -33,6 +32,9 @@ with col2:
     temperature = st.slider("Temperature", 0.00, 1.00, 0.70, 0.01)
 
     if st.button("Generate"):
+        if not is_loaded:
+            tokenizer, transformer = load_models()
+            
         res, _logprobs = generate(
             [input_query],
             transformer,
