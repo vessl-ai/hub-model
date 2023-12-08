@@ -8,8 +8,16 @@ from mistral.model import Transformer
 from mistral.tokenizer import Tokenizer
 from main import generate
 
-tokenizer = Tokenizer("/model/tokenizer.model")
-transformer = Transformer.from_folder(Path("/model"), max_batch_size=1)
+
+@st.cache_resource
+def load_models():
+    tokenizer = Tokenizer("/model/tokenizer.model")
+    transformer = Transformer.from_folder(Path("/model"), max_batch_size=1)
+
+    return tokenizer, transformer
+
+
+tokenizer, transformer = load_models()
 
 st.set_page_config(layout="wide")
 
