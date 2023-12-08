@@ -9,7 +9,7 @@ from mistral.tokenizer import Tokenizer
 from main import generate
 
 
-@st.cache_resource
+@st.cache_resource(show_spinner="Loading model (only for the first time)...")
 def load_models():
     tokenizer = Tokenizer("/model/tokenizer.model")
     transformer = Transformer.from_folder(Path("/model"), max_batch_size=1)
@@ -34,14 +34,15 @@ with col2:
     if st.button("Generate"):
         if not is_loaded:
             tokenizer, transformer = load_models()
-            
-        res, _logprobs = generate(
-            [input_query],
-            transformer,
-            tokenizer,
-            max_tokens=256,
-            temperature=temperature,
-        )
-        output_sentences = res[0]
-        print(output_sentences)
+        
+        with st.spinner("Generating result..."):
+            res, _logprobs = generate(
+                [input_query],
+                transformer,
+                tokenizer,
+                max_tokens=256,
+                temperature=temperature,
+            )
+            output_sentences = res[0]
+            print(output_sentences)
         st.write(output_sentences)
