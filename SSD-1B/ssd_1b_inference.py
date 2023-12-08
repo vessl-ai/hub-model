@@ -42,7 +42,7 @@ def main(argv):
     """
 
     pipe = StableDiffusionXLPipeline.from_pretrained(
-        "/model_/SSD-1B",
+        "/model",
         torch_dtype=torch.float16,
         use_safetensors=True,
         variant="fp16",

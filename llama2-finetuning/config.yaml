@@ -1,5 +1,5 @@
 # model
-model_name: /model_/llama_2_7b_hf
+model_name: /model/
 quantization: true
 
 # dataset

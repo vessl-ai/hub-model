@@ -1,13 +1,13 @@
 from datasets import load_from_disk
 from transformers import WhisperForConditionalGeneration, WhisperProcessor
 
-model_path = "/model/Whisper-large-v3"
+model_path = "/model"
 
 processor = WhisperProcessor.from_pretrained(model_path)
 model = WhisperForConditionalGeneration.from_pretrained(model_path)
 model.config.forced_decoder_ids = None
 
-ds = load_from_disk("/dataset/librispeech_asr_clean_test")
+ds = load_from_disk("/dataset/test")
 
 print("===========")
 for i in range(5):

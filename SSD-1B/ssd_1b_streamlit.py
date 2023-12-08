@@ -11,7 +11,7 @@ from PIL import Image
 st.set_page_config(layout="wide")
 
 pipe = StableDiffusionXLPipeline.from_pretrained(
-    "/model_/SSD-1B", torch_dtype=torch.float16, use_safetensors=True, variant="fp16"
+    "/model", torch_dtype=torch.float16, use_safetensors=True, variant="fp16"
 )
 pipe.to("cuda")
 
