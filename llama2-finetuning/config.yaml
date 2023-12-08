@@ -20,7 +20,7 @@ training:
   eval_steps: 25
   save_steps: 25
   save_limit: 5
-  output_dir: /trained_model/
+  output_dir: /artifacts/
   intermediate_dir: /artifacts/
 
 # lora config
