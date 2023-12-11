@@ -9,12 +9,12 @@ Whisper is a general-purpose speech recognition model. It is trained on a 680k h
 ## Quickstart
 
 ```sh
-pip install -r requirements_streamlit.txt
+pip install -r requirements.txt
 
-python -m main interactive /path/to/mistral-7B-v0.1/
+python inference.py
 ```
 
 ## Reference
 
 - Blog: <https://openai.com/research/whisper>
-- Repo: <https://github.com/openai/whisper>
+- Repository: <https://github.com/openai/whisper>
