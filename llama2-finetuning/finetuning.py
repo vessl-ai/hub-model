@@ -1,6 +1,6 @@
 import torch
 import vessl
-from datasets import load_from_disk
+from datasets import load_dataset
 from omegaconf import OmegaConf
 from peft import get_peft_config, get_peft_model, prepare_model_for_int8_training
 from transformers import (
@@ -34,6 +34,13 @@ if config.peft.enable:
 
 
 # dataset
+def make_prompt(sample):
+    return ("Below is an instruction that describes a task. "
+            "Write a response that appropriately completes the request.\n\n"
+            f"### Instruction:\n{sample['instruction']}\n\n"
+            f"### Input:\n{sample['input']}\n\n"
+            f"### Response:{sample['output']}\n")
+
 def tokenize(sample, add_eos_token=True):
     prompt = sample["prompt"]
 
@@ -57,7 +64,10 @@ def tokenize(sample, add_eos_token=True):
     return result
 
 
-ds = load_from_disk(config.dataset_path)
+ds = load_dataset(config.dataset_path)
+for phase in ds.keys():
+    if "prompt" not in ds[phase].column_names:
+        ds[phase] = ds[phase].map(make_prompt)
 processed_ds = ds.map(tokenize)
 
 data_collator = DataCollatorForSeq2Seq(
