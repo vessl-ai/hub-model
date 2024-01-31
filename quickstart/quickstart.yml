@@ -6,9 +6,10 @@ resources:
 image: quay.io/vessl-ai/hub:torch2.1.0-cuda12.2-202312070053
 import:
   /code/:
-    git:
+    git: 
       url: https://github.com/vessl-ai/hub-model
+      ref: main
 run:
-  - command: |-
+  - command: |
       python main.py
-    workdir: /
+    workdir: /code/quickstart
