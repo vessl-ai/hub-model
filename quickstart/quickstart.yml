@@ -1,0 +1,14 @@
+name: Quickstart
+description: A barebone GPU-accelerated workload
+resources:
+  cluster: vessl-gcp-oregon
+  preset: gpu-l4-small
+image: quay.io/vessl-ai/hub:torch2.1.0-cuda12.2-202312070053
+import:
+  /code/:
+    git:
+      url: https://github.com/vessl-ai/hub-model
+run:
+  - command: |-
+      python main.py
+    workdir: /
