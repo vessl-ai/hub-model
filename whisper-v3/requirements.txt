@@ -3,6 +3,7 @@ dill==0.3.7
 evaluate==0.4.1
 huggingface-hub==0.19.4
 jiwer==3.0.3
+librosa==0.10.2.post1
 multiprocess==0.70.15
 pyarrow-hotfix==0.6
 rapidfuzz==3.5.2
